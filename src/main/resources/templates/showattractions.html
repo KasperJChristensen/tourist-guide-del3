@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show attractions</title>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<h1>Attractions</h1>
+
+<table>
+    <tbody th:if="${attractions.isEmpty()}">
+    <tr>
+        <td colspan="6">There are no attractions yet</td>
+    </tr>
+    </tbody>
+
+    <thead th:unless="${attractions.isEmpty()}">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Tags</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="attraction : ${attractions}">
+        <td th:text="${attraction.name}" class="name-column"></td>
+        <td th:text="${attraction.description}"></td>
+
+        <td>
+            <a th:href="@{/attractions/{name}/tags(name=${attraction.name})}">Tags</a>
+        </td>
+
+        <td>
+            <a th:href="@{/attractions/{name}(name=${attraction.name})}">View</a>
+        </td>
+
+        <td>
+            <a th:href="@{/attractions/{name}/edit(name=${attraction.name})}">Edit</a>
+        </td>
+
+        <td>
+            <form th:action="@{/attractions/delete/{name}(name=${attraction.name})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<a th:href="@{/attractions/add}">Add new attraction</a>
+
+</body>
+</html>

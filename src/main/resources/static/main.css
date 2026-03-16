@@ -1,0 +1,141 @@
+/* --------------------------------------------------
+   Global Reset & Base Styles
+-------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 1200px;
+    margin: auto;
+    background: #f5f7fa;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --------------------------------------------------
+   Typography
+-------------------------------------------------- */
+h1, h2, h3 {
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* --------------------------------------------------
+   Form Elements
+-------------------------------------------------- */
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: white;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+/* --------------------------------------------------
+   Links & Buttons
+-------------------------------------------------- */
+a {
+    display: inline-block;
+    padding: 6px 12px;
+    background: forestgreen;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+a:hover {
+    background: #0e7a0e;
+}
+
+/* --------------------------------------------------
+   Layout Helpers
+-------------------------------------------------- */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.info-box {
+    margin-bottom: 25px;
+    max-width: 600px;
+}
+
+.read-only-box {
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background: white;
+}
+
+/* --------------------------------------------------
+   Table Styles
+-------------------------------------------------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #0077cc;
+    color: white;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* --------------------------------------------------
+   Special Classes
+-------------------------------------------------- */
+.name-column {
+    font-weight: bold;
+}

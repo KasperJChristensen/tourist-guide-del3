@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>See Attraction</title>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="header">
+    <h1 th:text="'Visit ' + ${attraction.name}"></h1>
+</div>
+
+<section class="info-box">
+    <label>Description:</label>
+    <div class="read-only-box" th:text="${attraction.description}"></div>
+</section>
+
+<section class="info-box">
+    <label>City:</label>
+    <div class="read-only-box" th:text="${attraction.location}"></div>
+</section>
+
+<a th:href="@{/attractions}">Back to List</a>
+
+</body>
+</html>
