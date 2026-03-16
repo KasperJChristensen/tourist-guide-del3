@@ -1,8 +1,8 @@
 package com.example.touristguidedel3.controller;
 
-import com.example.touristguidedel2.model.Category;
-import com.example.touristguidedel2.model.TouristAttraction;
-import com.example.touristguidedel2.service.TouristService;
+import com.example.touristguidedel3.model.Category;
+import com.example.touristguidedel3.model.TouristAttraction;
+import com.example.touristguidedel3.service.TouristService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.touristguidedel2.model.Category.CULTURE;
+import static com.example.touristguidedel3.model.Category.CULTURE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
