@@ -6,9 +6,9 @@ public class TouristAttraction {
     private String name;
     private String description;
     private String location;
-    private List<Category> tags;
+    private List<String> tags;
 
-    public TouristAttraction(String name, String description, String location, List<Category> tags) {
+    public TouristAttraction(String name, String description, String location, List<String> tags) {
         this.name = name;
         this.description = description;
         this.location = location;
@@ -30,7 +30,7 @@ public class TouristAttraction {
         return location;
     }
 
-    public List<Category> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
@@ -42,7 +42,7 @@ public class TouristAttraction {
         this.name = name;
     }
 
-    public void setTags(List<Category> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 
