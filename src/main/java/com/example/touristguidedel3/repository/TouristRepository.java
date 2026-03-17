@@ -63,10 +63,4 @@ public class TouristRepository {
         );
     }
 
-
-    public List<String> getTags() {
-        return List.of(Category.values());
-    }
-
-
 }
