@@ -5,16 +5,16 @@ create database touristguide;
 use touristguide;
 
 create table location (
-                          location_name varchar(100) primary key,
-                          unique (location_name)
+                          city_name varchar(100) primary key,
+                          unique (city_name)
 );
 
 create table attraction (
                             attraction_name varchar(100) not null,
                             description varchar(1000),
-                            location_name varchar(100) not null,
-                            primary key (attraction_name, location_name),
-                            foreign key (location_name) references location (location_name) on delete cascade
+                            city_name varchar(100) not null,
+                            primary key (attraction_name, city_name),
+                            foreign key (city_name) references location (city_name) on delete cascade
 );
 
 create table tags (
