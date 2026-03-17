@@ -22,11 +22,11 @@ public class TouristRepository {
 
     private final RowMapper<TouristAttraction> rowMapper = (rs, rowNum) -> {
         TouristAttraction attraction = new TouristAttraction();
-        attraction.setName(rs.getString("name"));
+        attraction.setName(rs.getString("attraction_name"));
         attraction.setDescription(rs.getString("description"));
-        attraction.setLocation(rs.getString("location"));
+        attraction.setLocation(rs.getString("city_name"));
 
-        String tags = rs.getString("tags");
+        String tags = rs.getString("tag");
         attraction.setTags(tags != null
                 ? Arrays.stream(tags.split(",")).map(String::trim).toList()
                 : List.of());
@@ -34,14 +34,15 @@ public class TouristRepository {
         return attraction;
     };
 
-    public List<TouristAttraction> findAllAtrractions() {
-        return jdbcTemplate.query("SELECT * FROM tourist_attractions", rowMapper);
+    public List<TouristAttraction> getAttractions() {
+        return jdbcTemplate.query(
+                "SELECT attraction.attraction_name, attraction.description, attraction.city_name, attraction_tag.tag " +
+                         "FROM attraction " +
+                         "join attraction_tag " +
+                         "on attraction.attraction_name = attraction_tag.attraction_name;",
+                rowMapper
+        );
     }
-}
-
-
-
-
 
 
 //    // Metode til at kunne tilføje attraktioner //

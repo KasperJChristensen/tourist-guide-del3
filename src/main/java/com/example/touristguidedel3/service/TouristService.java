@@ -16,31 +16,31 @@ public class TouristService {
         this.repository = repository;
     }
 
-    public ArrayList<TouristAttraction> getAttractions() {
+    public List<TouristAttraction> getAttractions() {
         return repository.getAttractions();
     }
-
-    public TouristAttraction findAttractionByName(String name) {
-        return repository.findAttractionByName(name);
-    }
-
-    public void saveAttraction(TouristAttraction attraction) {
-        repository.saveAttraction(attraction);
-    }
-
-    public void updateAttraction(TouristAttraction attraction){
-        repository.updateAttraction(attraction);
-    }
-
-    public void deleteAttraction(String nameOfAttraction){
-        repository.deleteAttraction(nameOfAttraction);
-    }
-    public List<String> getCities() {
-        return repository.getCities();
-    }
-    public List<String>getTags(){
-        return repository.getTags();
-    }
+//
+//    public TouristAttraction findAttractionByName(String name) {
+//        return repository.findAttractionByName(name);
+//    }
+//
+//    public void saveAttraction(TouristAttraction attraction) {
+//        repository.saveAttraction(attraction);
+//    }
+//
+//    public void updateAttraction(TouristAttraction attraction){
+//        repository.updateAttraction(attraction);
+//    }
+//
+//    public void deleteAttraction(String nameOfAttraction){
+//        repository.deleteAttraction(nameOfAttraction);
+//    }
+//    public List<String> getCities() {
+//        return repository.getCities();
+//    }
+//    public List<String>getTags(){
+//        return repository.getTags();
+//    }
 
 }
 
