@@ -10,4 +10,4 @@ INSERT INTO tag (tag) VALUES
     ('Amusement park');
 
 INSERT INTO attraction_tag (attraction_name, tag) VALUES
-                                                      ('Tivoli Gardens'), ('Amusement park');
+    ('Tivoli Gardens', 'Amusement park', 'Culture', 'Sight seeing');
