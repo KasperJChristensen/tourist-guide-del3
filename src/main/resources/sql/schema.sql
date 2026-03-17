@@ -14,7 +14,7 @@ create table attraction (
                             description varchar(1000),
                             city_name varchar(100) not null,
                             primary key (attraction_name, city_name),
-                            foreign key (city_name) references location (city_name) on delete cascade
+                            foreign key (city_name) references location (city_name) on delete restrict
 );
 
 create table tags (
@@ -28,3 +28,5 @@ create table attraction_tag (
                                 foreign key (attraction_name) references attraction (attraction_name) on delete cascade,
                                 foreign key (tag) references tags (tag) on delete restrict
 );
+
+SELECT * from attraction;
