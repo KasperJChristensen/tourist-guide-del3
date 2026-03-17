@@ -28,3 +28,5 @@ create table attraction_tag (
                                 foreign key (attraction_name) references attraction (attraction_name) on delete cascade,
                                 foreign key (tag) references tags (tag) on delete restrict
 );
+
+SELECT * from attraction_tag;
