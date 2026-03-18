@@ -26,9 +26,9 @@ public class TouristRepository {
         attraction.setDescription(rs.getString("description"));
         attraction.setLocation(rs.getString("city_name"));
 
-        String tags = rs.getString("tag");
+        String tags = rs.getString("tags");
         attraction.setTags(tags != null
-                ? Arrays.stream(tags.split(",")).map(String::trim).toList()
+                ? Arrays.asList(tags.split(","))
                 : List.of());
 
         return attraction;
@@ -36,10 +36,15 @@ public class TouristRepository {
 
     public List<TouristAttraction> getAttractions() {
         return jdbcTemplate.query(
-                "SELECT attraction.attraction_name, attraction.description, attraction.city_name, attraction_tag.tag " +
-                         "FROM attraction " +
-                         "join attraction_tag " +
-                         "on attraction.attraction_name = attraction_tag.attraction_name;",
+                "SELECT attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags " +
+                        "FROM attraction " +
+                        "JOIN location " +
+                        "    ON attraction.location_id = location.id " +
+                        "left JOIN attraction_tag " +
+                        "    ON attraction.id = attraction_tag.attraction_id " +
+                        "left JOIN tags " +
+                        "    ON attraction_tag.tag_id = tags.id " +
+                        "GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name\n;",
                 rowMapper
         );
     }
