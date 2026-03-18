@@ -19,10 +19,10 @@ public class TouristService {
     public List<TouristAttraction> getAttractions() {
         return repository.getAttractions();
     }
-//
-//    public TouristAttraction findAttractionByName(String name) {
-//        return repository.findAttractionByName(name);
-//    }
+
+    public TouristAttraction findAttractionByName(String name) {
+        return repository.findAttractionByName(name);
+    }
 //
 //    public void saveAttraction(TouristAttraction attraction) {
 //        repository.saveAttraction(attraction);

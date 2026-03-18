@@ -44,9 +44,31 @@ public class TouristRepository {
                         "    ON attraction.id = attraction_tag.attraction_id " +
                         "left JOIN tags " +
                         "    ON attraction_tag.tag_id = tags.id " +
-                        "GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name\n;",
+                        "GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;",
                 rowMapper
         );
+    }
+
+    public TouristAttraction findAttractionByName(String name) {
+        String sql = "SELECT attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags " +
+                "FROM attraction " +
+                "JOIN location " +
+                "    ON attraction.location_id = location.id " +
+                "left JOIN attraction_tag " +
+                "    ON attraction.id = attraction_tag.attraction_id " +
+                "left JOIN tags " +
+                "    ON attraction_tag.tag_id = tags.id " +
+                "WHERE attraction.attraction_name = ? " +
+                "GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;";
+
+        return jdbcTemplate.queryForObject(sql ,rowMapper, name);
+
+//        for (TouristAttraction touristAttraction : attractions) {
+//            if (touristAttraction.getName().equalsIgnoreCase(name)) {
+//                return touristAttraction;
+//            }
+//        }
+//        return null;
     }
 
 

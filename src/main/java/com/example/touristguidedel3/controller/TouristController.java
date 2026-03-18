@@ -24,19 +24,19 @@ public class TouristController {
         return "showattractions";
     }
 
-//    @GetMapping("/{name}")
-//    public String findAttractionByName(@PathVariable String name, Model model) {
-//        TouristAttraction attraction = service.findAttractionByName(name);
-//        model.addAttribute("attraction", attraction);
-//        return "attraction";
-//    }
-//
-//    @GetMapping("/{name}/tags")
-//    public String findTags(@PathVariable String name, Model model) {
-//        TouristAttraction attraction = service.findAttractionByName(name);
-//        model.addAttribute("attraction", attraction);
-//        return "showtags";
-//    }
+    @GetMapping("/{name}")
+    public String findAttractionByName(@PathVariable String name, Model model) {
+        TouristAttraction attraction = service.findAttractionByName(name);
+        model.addAttribute("attraction", attraction);
+        return "attraction";
+    }
+
+    @GetMapping("/{name}/tags")
+    public String findTags(@PathVariable String name, Model model) {
+        TouristAttraction attraction = service.findAttractionByName(name);
+        model.addAttribute("attraction", attraction);
+        return "showtags";
+    }
 //
 //    @GetMapping("/add")
 //    public String addAttraction(Model model) {
