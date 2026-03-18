@@ -5,28 +5,33 @@ create database touristguide;
 use touristguide;
 
 create table location (
-                          city_name varchar(100) primary key,
-                          unique (city_name)
+                          id int auto_increment,
+                          city_name varchar(100) not null unique,
+                          primary key (id)
 );
 
 create table attraction (
+                            id int auto_increment,
                             attraction_name varchar(100) not null,
                             description varchar(1000),
-                            city_name varchar(100) not null,
-                            primary key (attraction_name, city_name),
-                            foreign key (city_name) references location (city_name) on delete restrict
+                            location_id int not null,
+                            primary key (id),
+                            foreign key (location_id) references location (id)
+
+
 );
 
 create table tags (
-                      tag varchar(200) primary key
+                      id int auto_increment primary key,
+                      tag varchar(200) unique
 );
 
 create table attraction_tag (
-                                attraction_name varchar(100) not null,
-                                tag varchar(200) not null,
-                                primary key (attraction_name, tag),
-                                foreign key (attraction_name) references attraction (attraction_name) on delete cascade,
-                                foreign key (tag) references tags (tag) on delete restrict
+                                attraction_id int not null,
+                                tag_id int not null,
+                                primary key (attraction_id, tag_id),
+                                foreign key (attraction_id) references attraction (id) on delete cascade,
+                                foreign key (tag_id) references tags (id) on delete restrict
 );
 
-SELECT * from attraction;
+SELECT * from attraction_tag;
