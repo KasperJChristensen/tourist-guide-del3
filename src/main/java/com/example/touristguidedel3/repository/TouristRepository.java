@@ -94,26 +94,20 @@ public class TouristRepository {
 //        }
 //    }
 //
-//    // Hardkodet liste med byer //
-//    public List<String> getCities() {
-//        return List.of(
-//                "København",
-//                "Roskilde",
-//                "Helsingør",
-//                "Næstved",
-//                "Køge",
-//                "Slagelse",
-//                "Holbæk",
-//                "Kalundborg",
-//                "Hillerød",
-//                "Vordingborg"
-//        );
-//    }
-//
-//
-//    public List<String> getTags() {
-//        return List.of(Category.values());
-//    }
+
+    public List<String> getCities() {
+        String sql = "SELECT location.city_name FROM location";
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                rs.getString("city_name")
+        );
+    }
+
+    public List<String> getTags() {
+        String sql = "SELECT tags.tag FROM tags";
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                rs.getString("tag")
+        );
+    }
 
 
 }

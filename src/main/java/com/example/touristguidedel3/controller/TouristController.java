@@ -37,15 +37,15 @@ public class TouristController {
         model.addAttribute("attraction", attraction);
         return "showtags";
     }
-//
-//    @GetMapping("/add")
-//    public String addAttraction(Model model) {
-//        TouristAttraction attraction = new TouristAttraction();
-//        model.addAttribute("attraction", attraction);
-//        model.addAttribute("cities", service.getCities());
-//        model.addAttribute("tags", service.getTags());
-//        return "addnewattraction";
-//    }
+
+    @GetMapping("/add")
+    public String addAttraction(Model model) {
+        TouristAttraction attraction = new TouristAttraction();
+        model.addAttribute("attraction", attraction);
+        model.addAttribute("cities", service.getCities());
+        model.addAttribute("tags", service.getTags());
+        return "addnewattraction";
+    }
 //
 //    @PostMapping("/save")
 //    public String saveAttraction(@ModelAttribute TouristAttraction attraction) {
@@ -53,13 +53,13 @@ public class TouristController {
 //        return "redirect:/attractions";
 //    }
 //
-//    @GetMapping("/{name}/edit")
-//    public String editAttraction(@PathVariable String name, Model model) {
-//        model.addAttribute("attraction", service.findAttractionByName(name));
-//        model.addAttribute("cities", service.getCities());
-//        model.addAttribute("tags", service.getTags());
-//        return "edit";
-//    }
+    @GetMapping("/{name}/edit")
+    public String editAttraction(@PathVariable String name, Model model) {
+        model.addAttribute("attraction", service.findAttractionByName(name));
+        model.addAttribute("cities", service.getCities());
+        model.addAttribute("tags", service.getTags());
+        return "edit";
+    }
 //
 //    @PostMapping("/update")
 //    public String updateAttraction(@ModelAttribute TouristAttraction attraction) {

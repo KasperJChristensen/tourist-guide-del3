@@ -35,12 +35,12 @@ public class TouristService {
 //    public void deleteAttraction(String nameOfAttraction){
 //        repository.deleteAttraction(nameOfAttraction);
 //    }
-//    public List<String> getCities() {
-//        return repository.getCities();
-//    }
-//    public List<String>getTags(){
-//        return repository.getTags();
-//    }
+    public List<String> getCities() {
+        return repository.getCities();
+    }
+    public List<String>getTags(){
+        return repository.getTags();
+    }
 
 }
 
