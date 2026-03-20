@@ -117,14 +117,14 @@ public class TouristRepository {
         );
         return rowsUpdated > 0;
     }
-//    public boolean deleteAttractionById(int id) {
-//        String sql = """
-//            DELETE FROM attraction
-//            WHERE id = ?
-//            """;
-//        int rowsDeleted = jdbcTemplate.update(sql, id);
-//        return rowsDeleted > 0;
-//    }
+    public boolean deleteAttractionById(int id) {
+        String sql = """
+            DELETE FROM attraction
+            WHERE id = ?
+            """;
+        int rowsDeleted = jdbcTemplate.update(sql, id);
+        return rowsDeleted > 0;
+    }
 
 
     public List<String> getCities() {
