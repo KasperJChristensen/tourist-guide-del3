@@ -32,8 +32,8 @@ public class TouristService {
         repository.updateAttraction(attraction);
     }
 
-    public void deleteAttraction(int id){
-        repository.deleteAttractionById(id);
+    public void deleteAttraction(String nameOfAttraction){
+        repository.deleteAttraction(nameOfAttraction);
     }
     public List<String> getCities() {
         return repository.getCities();

@@ -72,6 +72,17 @@ public class TouristRepository {
 //        }
 //        return null;
     }
+    public boolean deleteAttraction(String name) {
+        String sql = """
+            
+                DELETE FROM attraction
+            WHERE attraction.attraction_name = ?
+            """;
+
+                int rowsDeleted = jdbcTemplate.update(sql, name);
+                return rowsDeleted > 0;
+                        };
+
 
 
     // Metode til at kunne tilføje attraktioner //
