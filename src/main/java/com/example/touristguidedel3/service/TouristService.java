@@ -32,9 +32,9 @@ public class TouristService {
 //        repository.updateAttraction(attraction);
 //    }
 //
-//    public void deleteAttraction(String nameOfAttraction){
-//        repository.deleteAttraction(nameOfAttraction);
-//    }
+    public void deleteAttraction(String nameOfAttraction){
+        repository.deleteAttraction(nameOfAttraction);
+    }
     public List<String> getCities() {
         return repository.getCities();
     }
