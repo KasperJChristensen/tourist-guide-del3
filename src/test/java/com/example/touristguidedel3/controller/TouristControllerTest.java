@@ -26,10 +26,13 @@ class TouristControllerTest {
     @MockitoBean
     TouristService service;
 
+    List<String> tags = List.of("Architecture", "Park", "Historic", "Museum", "Art", "Nature", "Landmark");
+
+
     @Test
     void getAttractions() throws Exception {
         ArrayList<TouristAttraction> mockList = new ArrayList<>();
-        mockList.add(new TouristAttraction("Tivoli", "Cool sted", "København", List.of(CULTURE)));
+        mockList.add(new TouristAttraction("Tivoli", "Cool sted", "København", tags));
         when(service.getAttractions()).thenReturn(mockList);
 
         mockMvc.perform(get("/attractions"))
@@ -43,7 +46,7 @@ class TouristControllerTest {
 
     @Test
     void findAttractionByName() throws Exception {
-        TouristAttraction mockAttraction = new TouristAttraction("Tivoli", "Cool sted", "København", List.of(CULTURE));
+        TouristAttraction mockAttraction = new TouristAttraction("Tivoli", "Cool sted", "København", tags);
         when(service.findAttractionByName("Tivoli")).thenReturn(mockAttraction);
 
         mockMvc.perform(get("/attractions/Tivoli"))
@@ -58,7 +61,7 @@ class TouristControllerTest {
 
     @Test
     void findTags() throws Exception {
-        TouristAttraction mockAttraction = new TouristAttraction("Tivoli", "Cool sted", "København", List.of(CULTURE));
+        TouristAttraction mockAttraction = new TouristAttraction("Tivoli", "Cool sted", "København", tags);
         when(service.findAttractionByName("Tivoli")).thenReturn(mockAttraction);
 
         mockMvc.perform(get("/attractions/Tivoli/tags"))
@@ -72,14 +75,14 @@ class TouristControllerTest {
 
     @Test
     void addAttraction() throws Exception {
-        List<Category> mockTags = List.of(Category.values());
-        when(service.getTags()).thenReturn(mockTags);
+
+        when(service.getTags()).thenReturn(tags);
 
         mockMvc.perform(get("/attractions/add"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("addnewattraction"))
                 .andExpect(model().attributeExists("tags"))
-                .andExpect(model().attribute("tags", mockTags));
+                .andExpect(model().attribute("tags", tags));
     }
 
     @Test
@@ -99,19 +102,19 @@ class TouristControllerTest {
         assertEquals("Tivoli", attraction.getName());
         assertEquals("Sted i København", attraction.getDescription());
         assertEquals("København", attraction.getLocation());
-        assertEquals(List.of(CULTURE), attraction.getTags());
+        assertEquals(List.of(tags), attraction.getTags());
 
     }
 
     @Test
     void editAttraction() throws Exception {
-        TouristAttraction mockAttraction = new TouristAttraction("Tivoli", "Cool sted", "København", List.of(CULTURE));
+        TouristAttraction mockAttraction = new TouristAttraction("Tivoli", "Cool sted", "København", tags);
         when(service.findAttractionByName("Tivoli")).thenReturn(mockAttraction);
 
         List<String> mockCities = List.of("København", "Roskilde");
         when(service.getCities()).thenReturn(mockCities);
 
-        List<Category> mockTags = List.of(Category.values());
+        List<String> mockTags = tags;
         when(service.getTags()).thenReturn(mockTags);
 
         mockMvc.perform(get("/attractions/Tivoli/edit"))
@@ -128,7 +131,7 @@ class TouristControllerTest {
                         .param("name", "Tivoli")
                         .param("description", "Sted i København")
                         .param("location", "København")
-                        .param("tags", "CULTURE"))
+                        .param("tags", "Culture"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/attractions"));
         ArgumentCaptor<TouristAttraction> captor = ArgumentCaptor.forClass(TouristAttraction.class);
@@ -138,13 +141,13 @@ class TouristControllerTest {
         assertEquals("Tivoli", attraction.getName());
         assertEquals("Sted i København", attraction.getDescription());
         assertEquals("København", attraction.getLocation());
-        assertEquals(List.of(CULTURE), attraction.getTags());
+        assertEquals(tags.contains("Culture"), attraction.getTags());
 
     }
 
     @Test
     void deleteAttraction() throws Exception {
-        TouristAttraction mockAttraction = new TouristAttraction("Tivoli", "Cool sted", "København", List.of(Category.CULTURE));
+        TouristAttraction mockAttraction = new TouristAttraction("Tivoli", "Cool sted", "København", tags);
         when(service.findAttractionByName("Tivoli")).thenReturn(mockAttraction);
 
         mockMvc.perform(post("/attractions/delete/Tivoli"))
