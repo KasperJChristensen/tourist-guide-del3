@@ -37,33 +37,34 @@ public class TouristRepository {
     };
 
     public List<TouristAttraction> getAttractions() {
-        return jdbcTemplate.query(
-                "SELECT attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags " +
-                        "FROM attraction " +
-                        "JOIN location " +
-                        "    ON attraction.location_id = location.id " +
-                        "left JOIN attraction_tag " +
-                        "    ON attraction.id = attraction_tag.attraction_id " +
-                        "left JOIN tags " +
-                        "    ON attraction_tag.tag_id = tags.id " +
-                        "GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;",
-                rowMapper
-        );
+        String sql = """
+                SELECT attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags 
+                FROM attraction
+                JOIN location
+                    ON attraction.location_id = location.id 
+                left JOIN attraction_tag 
+                    ON attraction.id = attraction_tag.attraction_id 
+                left JOIN tags 
+                    ON attraction_tag.tag_id = tags.id 
+                GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;
+                """;
+        return jdbcTemplate.query(sql, rowMapper);
     }
 
     public TouristAttraction findAttractionByName(String name) {
-        String sql = "SELECT attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags " +
-                "FROM attraction " +
-                "JOIN location " +
-                "    ON attraction.location_id = location.id " +
-                "left JOIN attraction_tag " +
-                "    ON attraction.id = attraction_tag.attraction_id " +
-                "left JOIN tags " +
-                "    ON attraction_tag.tag_id = tags.id " +
-                "WHERE attraction.attraction_name = ? " +
-                "GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;";
-
-        return jdbcTemplate.queryForObject(sql ,rowMapper, name);
+        String sql = """
+                SELECT attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags
+                FROM attraction 
+                JOIN location 
+                    ON attraction.location_id = location.id 
+                left JOIN attraction_tag 
+                    ON attraction.id = attraction_tag.attraction_id 
+                left JOIN tags 
+                    ON attraction_tag.tag_id = tags.id 
+                WHERE attraction.attraction_name = ? 
+                GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;
+                """;
+        return jdbcTemplate.queryForObject(sql, rowMapper, name);
 
 //        for (TouristAttraction touristAttraction : attractions) {
 //            if (touristAttraction.getName().equalsIgnoreCase(name)) {
@@ -72,43 +73,56 @@ public class TouristRepository {
 //        }
 //        return null;
     }
+
     public boolean deleteAttraction(String name) {
         String sql = """
-            
                 DELETE FROM attraction
-            WHERE attraction.attraction_name = ?
-            """;
+                WHERE attraction.attraction_name = ?
+                """;
 
-                int rowsDeleted = jdbcTemplate.update(sql, name);
-                return rowsDeleted > 0;
-                        };
-
+        int rowsDeleted = jdbcTemplate.update(sql, name);
+        return rowsDeleted > 0;
+    }
 
 
     // Metode til at kunne tilføje attraktioner //
-    public TouristAttraction saveAttraction(TouristAttraction attraction) {
+    public void saveAttraction(TouristAttraction attraction) {
+        int locationId = jdbcTemplate.queryForObject(
+                "SELECT id FROM location WHERE city_name = ?",
+                Integer.class,
+                attraction.getLocation());
+
         String sql = "INSERT INTO attraction (attraction_name, description, location_id) VALUES (?, ?, ?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        jdbcTemplate.update(connection -> {
-        PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, attraction.getName());
-        ps.setString(2, attraction.getDescription());
-        ps.setString(3, attraction.getLocation());
+        jdbcTemplate.update(
+                sql,
+                attraction.getName(),
+                attraction.getDescription(),
+                locationId
+        );
 
-        return ps;
-        }, keyHolder);
-
-        Number key = keyHolder.getKey();
-        if (key == null) {
-            throw new IllegalStateException("Failed to retrieve generated key");
-        }
-
-        return new TouristAttraction(key.intValue(), attraction.getName(), attraction.getDescription(), attraction.getLocation());
+//        String sql = "INSERT INTO attraction (attraction_name, description, location_id) VALUES (?, ?, ?)";
+//        KeyHolder keyHolder = new GeneratedKeyHolder();
+//
+//        jdbcTemplate.update(connection -> {
+//            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//            ps.setString(1, attraction.getName());
+//            ps.setString(2, attraction.getDescription());
+//            ps.setString(3, attraction.getLocation());
+//
+//            return ps;
+//        }, keyHolder);
+//
+//        Number key = keyHolder.getKey();
+//        if (key == null) {
+//            throw new IllegalStateException("Failed to retrieve generated key");
+//        }
+//
+//        return new TouristAttraction(key.intValue(), attraction.getName(), attraction.getDescription(), attraction.getLocation());
     }
 
     public boolean updateAttraction(TouristAttraction attraction) {
-    String sql = "UPDATE attraction SET attraction_name = ?, description = ?, location_id = ? WHERE attraction_id = ?";
+        String sql = "UPDATE attraction SET attraction_name = ?, description = ?, location_id = ? WHERE attraction_id = ?";
         int rowsUpdated = jdbcTemplate.update(
                 sql,
                 attraction.getName(),
@@ -117,11 +131,12 @@ public class TouristRepository {
         );
         return rowsUpdated > 0;
     }
+
     public boolean deleteAttractionById(int id) {
         String sql = """
-            DELETE FROM attraction
-            WHERE id = ?
-            """;
+                DELETE FROM attraction
+                WHERE id = ?
+                """;
         int rowsDeleted = jdbcTemplate.update(sql, id);
         return rowsDeleted > 0;
     }
@@ -129,16 +144,12 @@ public class TouristRepository {
 
     public List<String> getCities() {
         String sql = "SELECT location.city_name FROM location";
-        return jdbcTemplate.query(sql, (rs, rowNum) ->
-                rs.getString("city_name")
-        );
+        return jdbcTemplate.queryForList(sql, String.class);
     }
 
     public List<String> getTags() {
         String sql = "SELECT tags.tag FROM tags";
-        return jdbcTemplate.query(sql, (rs, rowNum) ->
-                rs.getString("tag")
-        );
+        return jdbcTemplate.queryForList(sql, String.class);
     }
 
 
