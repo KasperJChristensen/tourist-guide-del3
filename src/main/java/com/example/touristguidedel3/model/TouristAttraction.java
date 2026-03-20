@@ -3,6 +3,7 @@ package com.example.touristguidedel3.model;
 import java.util.List;
 
 public class TouristAttraction {
+    private int id;
     private String name;
     private String description;
     private String location;
@@ -13,6 +14,18 @@ public class TouristAttraction {
         this.description = description;
         this.location = location;
         this.tags = tags;
+
+
+    }
+
+
+
+    public TouristAttraction(int id, String name, String description, String location) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.location = location;
+
     }
 
     public TouristAttraction() {

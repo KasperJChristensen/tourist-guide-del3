@@ -23,18 +23,18 @@ public class TouristService {
     public TouristAttraction findAttractionByName(String name) {
         return repository.findAttractionByName(name);
     }
-//
-//    public void saveAttraction(TouristAttraction attraction) {
-//        repository.saveAttraction(attraction);
-//    }
-//
-//    public void updateAttraction(TouristAttraction attraction){
-//        repository.updateAttraction(attraction);
-//    }
-//
-//    public void deleteAttraction(String nameOfAttraction){
-//        repository.deleteAttraction(nameOfAttraction);
-//    }
+
+    public void saveAttraction(TouristAttraction attraction) {
+        repository.saveAttraction(attraction);
+    }
+
+    public void updateAttraction(TouristAttraction attraction){
+        repository.updateAttraction(attraction);
+    }
+
+    public void deleteAttraction(int id){
+        repository.deleteAttractionById(id);
+    }
     public List<String> getCities() {
         return repository.getCities();
     }

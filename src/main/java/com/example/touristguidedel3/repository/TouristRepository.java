@@ -3,6 +3,8 @@ package com.example.touristguidedel3.repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import com.example.touristguidedel3.model.TouristAttraction;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -72,28 +74,47 @@ public class TouristRepository {
     }
 
 
-//    // Metode til at kunne tilføje attraktioner //
-//    public void saveAttraction(TouristAttraction attraction) {
-//        attractions.add(attraction);
+    // Metode til at kunne tilføje attraktioner //
+    public TouristAttraction saveAttraction(TouristAttraction attraction) {
+        String sql = "INSERT INTO attraction (attraction_name, description, location_id) VALUES (?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+        PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, attraction.getName());
+        ps.setString(2, attraction.getDescription());
+        ps.setString(3, attraction.getLocation());
+
+        return ps;
+        }, keyHolder);
+
+        Number key = keyHolder.getKey();
+        if (key == null) {
+            throw new IllegalStateException("Failed to retrieve generated key");
+        }
+
+        return new TouristAttraction(key.intValue(), attraction.getName(), attraction.getDescription(), attraction.getLocation());
+    }
+
+    public boolean updateAttraction(TouristAttraction attraction) {
+    String sql = "UPDATE attraction SET attraction_name = ?, description = ?, location_id = ? WHERE attraction_id = ?";
+        int rowsUpdated = jdbcTemplate.update(
+                sql,
+                attraction.getName(),
+                attraction.getDescription(),
+                attraction.getLocation()
+        );
+        return rowsUpdated > 0;
+    }
+//    public boolean deleteAttractionById(int id) {
+//        String sql = """
+//            DELETE FROM attraction
+//            WHERE id = ?
+//            """;
+//        int rowsDeleted = jdbcTemplate.update(sql, id);
+//        return rowsDeleted > 0;
 //    }
-//
-//
-//    public void updateAttraction(TouristAttraction attraction) {
-//        TouristAttraction existingAttraction = findAttractionByName(attraction.getName());
-//        if (existingAttraction != null) {
-//            existingAttraction.setDescription(attraction.getDescription());
-//            existingAttraction.setLocation(attraction.getLocation());
-//            existingAttraction.setTags(attraction.getTags());
-//        }
-//    }
-//
-//    public void deleteAttraction(String nameOfAttraction) {
-//        TouristAttraction attraction = findAttractionByName(nameOfAttraction);
-//        if (attraction != null) {
-//            attractions.remove(attraction);
-//        }
-//    }
-//
+
 
     public List<String> getCities() {
         String sql = "SELECT location.city_name FROM location";
