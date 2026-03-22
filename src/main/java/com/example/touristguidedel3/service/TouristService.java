@@ -11,7 +11,6 @@ import java.util.List;
 public class TouristService {
     private final TouristRepository repository;
 
-
     public TouristService(TouristRepository repository) {
         this.repository = repository;
     }
@@ -20,8 +19,8 @@ public class TouristService {
         return repository.getAttractions();
     }
 
-    public TouristAttraction findAttractionByName(String name) {
-        return repository.findAttractionByName(name);
+    public TouristAttraction findAttractionById(int id) {
+        return repository.findAttractionById(id);
     }
 
     @Transactional
@@ -31,19 +30,22 @@ public class TouristService {
         repository.saveAttraction_tags(attractionId, attraction.getTags());
     }
 
-
-    public void updateAttraction(TouristAttraction attraction){
-        repository.updateAttraction(attraction);
+    @Transactional
+    public void updateAttraction(TouristAttraction attraction) {
+        int locationId = repository.findLocationId(attraction.getLocation());
+        repository.updateAttraction(attraction, locationId);
     }
 
     @Transactional
-    public void deleteAttraction(String nameOfAttraction){
-        repository.deleteAttraction(nameOfAttraction);
+    public void deleteAttraction(int idOfAttraction) {
+        repository.deleteAttraction(idOfAttraction);
     }
+
     public List<String> getCities() {
         return repository.getCities();
     }
-    public List<String>getTags(){
+
+    public List<String> getTags() {
         return repository.getTags();
     }
 

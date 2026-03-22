@@ -34,19 +34,19 @@
         <td th:text="${attraction.description}"></td>
 
         <td>
-            <a th:href="@{/attractions/{name}/tags(name=${attraction.name})}">Tags</a>
+            <a th:href="@{/attractions/{id}/tags(id=${attraction.id})}">Tags</a>
         </td>
 
         <td>
-            <a th:href="@{/attractions/{name}(name=${attraction.name})}">View</a>
+            <a th:href="@{/attractions/{id}(id=${attraction.id})}">View</a>
         </td>
 
         <td>
-            <a th:href="@{/attractions/{name}/edit(name=${attraction.name})}">Edit</a>
+            <a th:href="@{/attractions/{id}/edit(id=${attraction.id})}">Edit</a>
         </td>
 
         <td>
-            <form th:action="@{/attractions/delete/{name}(name=${attraction.name})}" method="post">
+            <form th:action="@{/attractions/delete/{id}(id=${attraction.id})}" method="post">
                 <button type="submit">Delete</button>
             </form>
         </td>

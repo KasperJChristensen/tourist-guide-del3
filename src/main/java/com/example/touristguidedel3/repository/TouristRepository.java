@@ -22,6 +22,7 @@ public class TouristRepository {
 
     private final RowMapper<TouristAttraction> rowMapper = (rs, rowNum) -> {
         TouristAttraction attraction = new TouristAttraction();
+        attraction.setId(rs.getInt("id"));
         attraction.setName(rs.getString("attraction_name"));
         attraction.setDescription(rs.getString("description"));
         attraction.setLocation(rs.getString("city_name"));
@@ -36,7 +37,7 @@ public class TouristRepository {
 
     public List<TouristAttraction> getAttractions() {
         String sql = """
-                SELECT attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags 
+                SELECT attraction.id, attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags 
                 FROM attraction
                 JOIN location
                     ON attraction.location_id = location.id 
@@ -49,9 +50,9 @@ public class TouristRepository {
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-    public TouristAttraction findAttractionByName(String name) {
+    public TouristAttraction findAttractionById(int id) {
         String sql = """
-                SELECT attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags
+                SELECT attraction.id, attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags
                 FROM attraction 
                 JOIN location 
                     ON attraction.location_id = location.id 
@@ -59,20 +60,10 @@ public class TouristRepository {
                     ON attraction.id = attraction_tag.attraction_id 
                 left JOIN tags 
                     ON attraction_tag.tag_id = tags.id 
-                WHERE attraction.attraction_name = ? 
+                WHERE attraction.id = ? 
                 GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;
                 """;
-        return jdbcTemplate.queryForObject(sql, rowMapper, name);
-    }
-
-    public boolean deleteAttraction(String name) {
-        String sql = """
-                DELETE FROM attraction
-                WHERE attraction.attraction_name = ?
-                """;
-
-        int rowsDeleted = jdbcTemplate.update(sql, name);
-        return rowsDeleted > 0;
+        return jdbcTemplate.queryForObject(sql, rowMapper, id);
     }
 
     public int findLocationId(String cityName) {
@@ -133,26 +124,25 @@ public class TouristRepository {
     }
 
 
-    public boolean updateAttraction(TouristAttraction attraction) {
-        String sql = "UPDATE attraction SET attraction_name = ?, description = ?, location_id = ? WHERE attraction_id = ?";
+    public boolean updateAttraction(TouristAttraction attraction, int locationId) {
+        String sql = "UPDATE attraction SET attraction_name = ?, description = ?, location_id = ? WHERE id = ?";
         int rowsUpdated = jdbcTemplate.update(
                 sql,
                 attraction.getName(),
                 attraction.getDescription(),
-                attraction.getLocation()
+                locationId,
+                attraction.getId()
         );
         return rowsUpdated > 0;
     }
 
-    public boolean deleteAttractionById(int id) {
+    public void deleteAttraction(int id) {
         String sql = """
                 DELETE FROM attraction
                 WHERE id = ?
                 """;
-        int rowsDeleted = jdbcTemplate.update(sql, id);
-        return rowsDeleted > 0;
+        jdbcTemplate.update(sql, id);
     }
-
 
     public List<String> getCities() {
         String sql = "SELECT location.city_name FROM location";
@@ -163,6 +153,4 @@ public class TouristRepository {
         String sql = "SELECT tags.tag FROM tags";
         return jdbcTemplate.queryForList(sql, String.class);
     }
-
-
 }
