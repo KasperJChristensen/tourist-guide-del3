@@ -7,10 +7,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.sql.*;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -65,13 +63,6 @@ public class TouristRepository {
                 GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;
                 """;
         return jdbcTemplate.queryForObject(sql, rowMapper, name);
-
-//        for (TouristAttraction touristAttraction : attractions) {
-//            if (touristAttraction.getName().equalsIgnoreCase(name)) {
-//                return touristAttraction;
-//            }
-//        }
-//        return null;
     }
 
     public boolean deleteAttraction(String name) {
@@ -84,14 +75,16 @@ public class TouristRepository {
         return rowsDeleted > 0;
     }
 
-
-    // Metode til at kunne tilføje attraktioner //
-    public void saveAttraction(TouristAttraction attraction) {
-        int locationId = jdbcTemplate.queryForObject(
+    public int findLocationId(String cityName) {
+        return jdbcTemplate.queryForObject(
                 "SELECT id FROM location WHERE city_name = ?",
                 Integer.class,
-                attraction.getLocation());
+                cityName
+        );
+    }
 
+    // Metode til at kunne tilføje attraktioner //
+    public int saveAttraction(TouristAttraction attraction, int locationId) {
         String sql = "INSERT INTO attraction (attraction_name, description, location_id) VALUES (?, ?, ?)";
 
         jdbcTemplate.update(
@@ -101,25 +94,44 @@ public class TouristRepository {
                 locationId
         );
 
-//        String sql = "INSERT INTO attraction (attraction_name, description, location_id) VALUES (?, ?, ?)";
+
+        int attractionId = jdbcTemplate.queryForObject(
+                "SELECT id FROM attraction WHERE attraction_name = ?",
+                Integer.class,
+                attraction.getName());
+
+        return attractionId;
+
+
+//        Version fra Exceptional_Profile
+
 //        KeyHolder keyHolder = new GeneratedKeyHolder();
+//        String sql = "INSERT INTO attraction (attraction_name, description, location_id) VALUES (?, ?, ?)";
 //
 //        jdbcTemplate.update(connection -> {
 //            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 //            ps.setString(1, attraction.getName());
 //            ps.setString(2, attraction.getDescription());
-//            ps.setString(3, attraction.getLocation());
-//
+//            ps.setInt(3, locationId);
 //            return ps;
 //        }, keyHolder);
 //
-//        Number key = keyHolder.getKey();
-//        if (key == null) {
-//            throw new IllegalStateException("Failed to retrieve generated key");
-//        }
-//
-//        return new TouristAttraction(key.intValue(), attraction.getName(), attraction.getDescription(), attraction.getLocation());
+//        return keyHolder.getKey().intValue();
     }
+
+    public void saveAttraction_tags(int attractionId, List<String> tags) {
+        String sql = "INSERT INTO attraction_tag (attraction_id, tag_id) VALUES (?, ?)";
+
+        for (String tag : tags) {
+            int tagId = jdbcTemplate.queryForObject(
+                    "SELECT id FROM tags WHERE tag = ?",
+                    Integer.class,
+                    tag
+            );
+            jdbcTemplate.update(sql, attractionId, tagId);
+        }
+    }
+
 
     public boolean updateAttraction(TouristAttraction attraction) {
         String sql = "UPDATE attraction SET attraction_name = ?, description = ?, location_id = ? WHERE attraction_id = ?";

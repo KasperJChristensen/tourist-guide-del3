@@ -3,8 +3,8 @@ package com.example.touristguidedel3.service;
 import com.example.touristguidedel3.model.TouristAttraction;
 import com.example.touristguidedel3.repository.TouristRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,14 +24,19 @@ public class TouristService {
         return repository.findAttractionByName(name);
     }
 
+    @Transactional
     public void saveAttraction(TouristAttraction attraction) {
-        repository.saveAttraction(attraction);
+        int locationId = repository.findLocationId(attraction.getLocation());
+        int attractionId = repository.saveAttraction(attraction, locationId);
+        repository.saveAttraction_tags(attractionId, attraction.getTags());
     }
+
 
     public void updateAttraction(TouristAttraction attraction){
         repository.updateAttraction(attraction);
     }
 
+    @Transactional
     public void deleteAttraction(String nameOfAttraction){
         repository.deleteAttraction(nameOfAttraction);
     }
