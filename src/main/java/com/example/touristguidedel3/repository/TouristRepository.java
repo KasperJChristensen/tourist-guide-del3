@@ -124,16 +124,23 @@ public class TouristRepository {
     }
 
 
-    public boolean updateAttraction(TouristAttraction attraction, int locationId) {
+    public void updateAttraction(TouristAttraction attraction, int locationId) {
         String sql = "UPDATE attraction SET attraction_name = ?, description = ?, location_id = ? WHERE id = ?";
-        int rowsUpdated = jdbcTemplate.update(
+        jdbcTemplate.update(
                 sql,
                 attraction.getName(),
                 attraction.getDescription(),
                 locationId,
                 attraction.getId()
         );
-        return rowsUpdated > 0;
+    }
+
+    public void deleteTagsForAttraction(int attractionId){
+        String sql = """
+                DELETE FROM attraction_tag
+                WHERE attraction_id = ?
+                """;
+        jdbcTemplate.update(sql, attractionId);
     }
 
     public void deleteAttraction(int id) {

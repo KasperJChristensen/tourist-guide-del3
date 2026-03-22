@@ -34,6 +34,8 @@ public class TouristService {
     public void updateAttraction(TouristAttraction attraction) {
         int locationId = repository.findLocationId(attraction.getLocation());
         repository.updateAttraction(attraction, locationId);
+        repository.deleteTagsForAttraction(attraction.getId());
+        repository.saveAttraction_tags(attraction.getId(),attraction.getTags());
     }
 
     @Transactional
@@ -48,6 +50,5 @@ public class TouristService {
     public List<String> getTags() {
         return repository.getTags();
     }
-
 }
 
