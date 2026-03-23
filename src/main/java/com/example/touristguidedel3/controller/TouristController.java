@@ -37,7 +37,6 @@ public class TouristController {
         model.addAttribute("attraction", attraction);
         return "showtags";
     }
-//TWEST
     public String addAttraction(Model model) {
         TouristAttraction attraction = new TouristAttraction();
         model.addAttribute("attraction", attraction);
