@@ -1,31 +1,31 @@
--- create table location (
---                           id int auto_increment,
---                           city_name varchar(100) not null unique,
---                           primary key (id)
--- );
---
--- create table attraction (
---                             id int auto_increment,
---                             attraction_name varchar(100) not null,
---                             description varchar(1000),
---                             location_id int not null,
---                             primary key (id),
---                             foreign key (location_id) references location (id)
---
---
--- );
---
--- create table tags (
---                             id int auto_increment,
---                             tag_name varchar (200) not null unique
--- )
---
--- INSERT INTO location (id, city_name) VALUES (1, 'København V');
--- INSERT INTO location (id, city_name) VALUES (2, 'Roskilde');
---
--- INSERT INTO attraction (id, attraction_name, description, location_id) VALUES (1, 'Tivoli Gardens', 'An amusement park in the center of Copenhagen', 1);
--- INSERT INTO attraction (id, attraction_name, description, location_id) VALUES (2, 'The Viking Ship Museum',
---                                                                                'With the sound of the waves and smell of wet wood, the Viking Ship Museum is located right by Roskilde Fjord', 2)
---
--- INSERT INTO tags (id, tag_name) VALUES (1, 'Culture')
--- INSERT INTO tags (id, tag_name) VALUES (2, 'History')
+create table location (
+                          id int auto_increment,
+                          city_name varchar(100) not null unique,
+                          primary key (id)
+);
+
+create table attraction (
+                            id int auto_increment,
+                            attraction_name varchar(100) not null,
+                            description varchar(1000),
+                            location_id int not null,
+                            primary key (id),
+                            foreign key (location_id) references location (id)
+
+
+);
+
+create table tags (
+                            id int auto_increment,
+                            tag_name varchar (200) not null unique
+)
+
+INSERT INTO location (id, city_name) VALUES (1, 'København V');
+INSERT INTO location (id, city_name) VALUES (2, 'Roskilde');
+
+INSERT INTO attraction (id, attraction_name, description, location_id) VALUES (1, 'Tivoli Gardens', 'An amusement park in the center of Copenhagen', 1);
+INSERT INTO attraction (id, attraction_name, description, location_id) VALUES (2, 'The Viking Ship Museum',
+                                                                               'With the sound of the waves and smell of wet wood, the Viking Ship Museum is located right by Roskilde Fjord', 2)
+
+INSERT INTO tags (id, tag_name) VALUES (1, 'Culture')
+INSERT INTO tags (id, tag_name) VALUES (2, 'History')
