@@ -12,10 +12,13 @@
 
 <form th:action="@{/attractions/update}" th:object="${attraction}" method="post">
 
-    <input type="hidden" th:field="*{name}">
+    <input type="hidden" th:field="*{id}">
 
-    <label>Description:</label>
-    <textarea th:field="*{description}" rows="10" required></textarea>
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name" required>
+
+    <label for="description">Description:</label>
+    <textarea th:field="*{description}" id="description" rows="10" required></textarea>
 
     <label>City:</label>
     <select th:field="*{location}">
@@ -23,10 +26,10 @@
     </select>
 
     <label>Tags:</label>
-        <label th:each="tag : ${tags}">
-            <input type="checkbox" th:field="*{tags}" th:value="${tag}">
-            <span th:text="${tag}"></span>
-        </label>
+    <label th:each="tag : ${tags}">
+        <input type="checkbox" th:field="*{tags}" th:value="${tag}">
+        <span th:text="${tag}"></span>
+    </label>
 
     <button type="submit">Update Attraction</button>
 </form>

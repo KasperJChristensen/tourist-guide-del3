@@ -3,14 +3,13 @@ package com.example.touristguidedel3.service;
 import com.example.touristguidedel3.model.TouristAttraction;
 import com.example.touristguidedel3.repository.TouristRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TouristService {
     private final TouristRepository repository;
-
 
     public TouristService(TouristRepository repository) {
         this.repository = repository;
@@ -20,27 +19,36 @@ public class TouristService {
         return repository.getAttractions();
     }
 
-    public TouristAttraction findAttractionByName(String name) {
-        return repository.findAttractionByName(name);
+    public TouristAttraction findAttractionById(int id) {
+        return repository.findAttractionById(id);
     }
-//
-//    public void saveAttraction(TouristAttraction attraction) {
-//        repository.saveAttraction(attraction);
-//    }
-//
-//    public void updateAttraction(TouristAttraction attraction){
-//        repository.updateAttraction(attraction);
-//    }
-//
-//    public void deleteAttraction(String nameOfAttraction){
-//        repository.deleteAttraction(nameOfAttraction);
-//    }
-//    public List<String> getCities() {
-//        return repository.getCities();
-//    }
-//    public List<String>getTags(){
-//        return repository.getTags();
-//    }
 
+    @Transactional
+    public void saveAttraction(TouristAttraction attraction) {
+        int locationId = repository.findLocationId(attraction.getLocation());
+        int attractionId = repository.saveAttraction(attraction, locationId);
+        repository.saveAttraction_tags(attractionId, attraction.getTags());
+    }
+
+    @Transactional
+    public void updateAttraction(TouristAttraction attraction) {
+        int locationId = repository.findLocationId(attraction.getLocation());
+        repository.updateAttraction(attraction, locationId);
+        repository.deleteTagsForAttraction(attraction.getId());
+        repository.saveAttraction_tags(attraction.getId(),attraction.getTags());
+    }
+
+    @Transactional
+    public void deleteAttraction(int idOfAttraction) {
+        repository.deleteAttraction(idOfAttraction);
+    }
+
+    public List<String> getCities() {
+        return repository.getCities();
+    }
+
+    public List<String> getTags() {
+        return repository.getTags();
+    }
 }
 
