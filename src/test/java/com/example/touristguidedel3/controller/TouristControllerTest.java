@@ -77,12 +77,15 @@ class TouristControllerTest {
     void addAttraction() throws Exception {
 
         when(service.getTags()).thenReturn(tags);
+        when(service.getCities()).thenReturn(List.of("København"));
 
         mockMvc.perform(get("/attractions/add"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("addnewattraction"))
                 .andExpect(model().attributeExists("tags"))
-                .andExpect(model().attribute("tags", tags));
+                .andExpect(model().attribute("tags", tags))
+                .andExpect(model().attributeExists("cities"));
+
     }
 
     @Test
