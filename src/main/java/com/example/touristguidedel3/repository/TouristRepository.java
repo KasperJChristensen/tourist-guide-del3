@@ -76,38 +76,18 @@ public class TouristRepository {
 
     // Metode til at kunne tilføje attraktioner //
     public int saveAttraction(TouristAttraction attraction, int locationId) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO attraction (attraction_name, description, location_id) VALUES (?, ?, ?)";
 
-        jdbcTemplate.update(
-                sql,
-                attraction.getName(),
-                attraction.getDescription(),
-                locationId
-        );
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, attraction.getName());
+            ps.setString(2, attraction.getDescription());
+            ps.setInt(3, locationId);
+            return ps;
+        }, keyHolder);
 
-
-        int attractionId = jdbcTemplate.queryForObject(
-                "SELECT id FROM attraction WHERE attraction_name = ?",
-                Integer.class,
-                attraction.getName());
-
-        return attractionId;
-
-
-//        Version fra Exceptional_Profile
-
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//        String sql = "INSERT INTO attraction (attraction_name, description, location_id) VALUES (?, ?, ?)";
-//
-//        jdbcTemplate.update(connection -> {
-//            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//            ps.setString(1, attraction.getName());
-//            ps.setString(2, attraction.getDescription());
-//            ps.setInt(3, locationId);
-//            return ps;
-//        }, keyHolder);
-//
-//        return keyHolder.getKey().intValue();
+        return keyHolder.getKey().intValue();
     }
 
     public void saveAttraction_tags(int attractionId, List<String> tags) {
