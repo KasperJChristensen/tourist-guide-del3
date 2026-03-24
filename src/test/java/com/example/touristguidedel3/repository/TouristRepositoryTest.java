@@ -1,8 +1,7 @@
 package com.example.touristguidedel3.repository;
 
 import com.example.touristguidedel3.model.TouristAttraction;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,6 +37,7 @@ class TouristRepositoryTest {
 
     @Test
     void findAttractionById() {
+
     }
 
     @Test
@@ -61,6 +61,8 @@ class TouristRepositoryTest {
 
     @Test
     void saveAttraction_tags() {
+
+
     }
 
     @Test
@@ -77,9 +79,22 @@ class TouristRepositoryTest {
 
     @Test
     void getCities() {
+        List<String> all = repo.getCities();
+
+        assertThat(all).isNotNull();
+        assertThat(all.size()).isEqualTo(2);
+
+        assertThat(all.get(0)).isEqualTo("København V");
+        assertThat(all.get(1)).isEqualTo("Roskilde");
     }
 
     @Test
     void getTags() {
+        List<String> all = repo.getTags();
+
+        assertThat(all).isNotNull();
+        assertThat(all.size()).isEqualTo(2);
+        assertThat(all.get(0)).isEqualTo("Culture");
+        assertThat(all.get(1)).isEqualTo("History");
     }
-}
+    }
