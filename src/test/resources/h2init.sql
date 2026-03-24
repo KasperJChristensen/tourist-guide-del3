@@ -1,3 +1,7 @@
+drop table if exists attraction;
+drop table if exists location;
+drop table if exists tags;
+
 create table location (
                           id int auto_increment,
                           city_name varchar(100) not null unique,
@@ -16,16 +20,27 @@ create table attraction (
 );
 
 create table tags (
-                            id int auto_increment,
-                            tag_name varchar (200) not null unique
-)
+                      id int auto_increment primary key,
+                      tag varchar(200) unique
+);
+
+create table attraction_tag (
+                                attraction_id int not null,
+                                tag_id int not null,
+                                primary key (attraction_id, tag_id),
+                                foreign key (attraction_id) references attraction (id) on delete cascade,
+                                foreign key (tag_id) references tags (id) on delete restrict
+);
 
 INSERT INTO location (id, city_name) VALUES (1, 'København V');
 INSERT INTO location (id, city_name) VALUES (2, 'Roskilde');
 
-INSERT INTO attraction (id, attraction_name, description, location_id) VALUES (1, 'Tivoli Gardens', 'An amusement park in the center of Copenhagen', 1);
-INSERT INTO attraction (id, attraction_name, description, location_id) VALUES (2, 'The Viking Ship Museum',
-                                                                               'With the sound of the waves and smell of wet wood, the Viking Ship Museum is located right by Roskilde Fjord', 2)
+INSERT INTO attraction (attraction_name, description, location_id) VALUES ('Tivoli Gardens', 'An amusement park in the center of Copenhagen', 1);
+INSERT INTO attraction (attraction_name, description, location_id) VALUES ('The Viking Ship Museum',
+                                                                               'With the sound of the waves and smell of wet wood, the Viking Ship Museum is located right by Roskilde Fjord', 2);
 
-INSERT INTO tags (id, tag_name) VALUES (1, 'Culture')
-INSERT INTO tags (id, tag_name) VALUES (2, 'History')
+INSERT INTO tags (id, tag) VALUES (1, 'Culture');
+INSERT INTO tags (id, tag) VALUES (2, 'History');
+
+INSERT INTO attraction_tag (attraction_id, tag_id) VALUES (1,1);
+INSERT INTO attraction_tag (attraction_id, tag_id) VALUES (2,2);
