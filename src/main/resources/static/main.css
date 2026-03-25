@@ -139,3 +139,178 @@ tr:nth-child(even) {
 .name-column {
     font-weight: bold;
 }
+
+
+/* --------------------------------------------------
+   Global Reset & Base Styles
+-------------------------------------------------- */
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*body {*/
+/*    max-width: 1200px;*/
+/*    margin: auto;*/
+/*    background: linear-gradient(135deg, #eef2f7, #e3ecf7);*/
+/*    padding: 30px;*/
+/*    font-family: 'Segoe UI', Arial, sans-serif;*/
+/*    color: #2d3436;*/
+/*    line-height: 1.6;*/
+/*}*/
+
+/*/* --------------------------------------------------*/
+/*   Typography*/
+/*-------------------------------------------------- */
+/*h1, h2, h3 {*/
+/*    font-weight: 700;*/
+/*    color: #1e272e;*/
+/*    margin-bottom: 15px;*/
+/*    text-align: center;*/
+/*    letter-spacing: 0.5px;*/
+/*}*/
+
+/*h1 {*/
+/*    font-size: 2.2rem;*/
+/*}*/
+
+/*label {*/
+/*    font-weight: 600;*/
+/*    margin-bottom: 6px;*/
+/*    display: block;*/
+/*}*/
+
+/*/* --------------------------------------------------*/
+/*   Form Elements*/
+/*-------------------------------------------------- */
+/*input[type="text"],*/
+/*textarea,*/
+/*select {*/
+/*    width: 100%;*/
+/*    max-width: 500px;*/
+/*    padding: 12px;*/
+/*    border-radius: 8px;*/
+/*    border: 1px solid #dcdde1;*/
+/*    background: #ffffff;*/
+/*    margin-bottom: 20px;*/
+/*    font-size: 1rem;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*input:focus,*/
+/*textarea:focus,*/
+/*select:focus {*/
+/*    border-color: #4a90e2;*/
+/*    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);*/
+/*    outline: none;*/
+/*}*/
+
+/*input[type="checkbox"] {*/
+/*    margin-right: 6px;*/
+/*}*/
+
+/*/* --------------------------------------------------*/
+/*   Buttons*/
+/*-------------------------------------------------- */
+/*button {*/
+/*    padding: 10px 18px;*/
+/*    background: linear-gradient(135deg, #0077cc, #00a8ff);*/
+/*    color: white;*/
+/*    border: none;*/
+/*    border-radius: 8px;*/
+/*    cursor: pointer;*/
+/*    font-size: 0.95rem;*/
+/*    transition: all 0.2s ease;*/
+/*    box-shadow: 0 4px 10px rgba(0,0,0,0.1);*/
+/*}*/
+
+/*button:hover {*/
+/*    transform: translateY(-2px);*/
+/*    box-shadow: 0 6px 14px rgba(0,0,0,0.15);*/
+/*}*/
+
+/*button:active {*/
+/*    transform: scale(0.98);*/
+/*}*/
+
+/*/* --------------------------------------------------*/
+/*   Links*/
+/*-------------------------------------------------- */
+/*a {*/
+/*    display: inline-block;*/
+/*    padding: 6px 14px;*/
+/*    background: linear-gradient(135deg, #2ecc71, #27ae60);*/
+/*    color: white;*/
+/*    border-radius: 20px;*/
+/*    text-decoration: none;*/
+/*    font-size: 0.9rem;*/
+/*    transition: all 0.2s ease;*/
+/*}*/
+
+/*a:hover {*/
+/*    transform: scale(1.05);*/
+/*    box-shadow: 0 4px 10px rgba(0,0,0,0.15);*/
+/*}*/
+
+/*/* --------------------------------------------------*/
+/*   Layout Helpers*/
+/*-------------------------------------------------- */
+/*.header {*/
+/*    text-align: center;*/
+/*    margin-bottom: 30px;*/
+/*}*/
+
+/*.info-box {*/
+/*    margin-bottom: 25px;*/
+/*    max-width: 600px;*/
+/*}*/
+
+/*.read-only-box {*/
+/*    padding: 14px;*/
+/*    border-radius: 8px;*/
+/*    background: #ffffff;*/
+/*    box-shadow: 0 3px 10px rgba(0,0,0,0.08);*/
+/*    border-left: 4px solid #0077cc;*/
+/*}*/
+
+/*/* --------------------------------------------------*/
+/*   Table Styles*/
+/*-------------------------------------------------- */
+/*table {*/
+/*    width: 100%;*/
+/*    border-collapse: collapse;*/
+/*    margin-top: 25px;*/
+/*    background: white;*/
+/*    border-radius: 10px;*/
+/*    overflow: hidden;*/
+/*    box-shadow: 0 6px 18px rgba(0,0,0,0.08);*/
+/*}*/
+
+/*th, td {*/
+/*    padding: 14px;*/
+/*    text-align: left;*/
+/*}*/
+
+/*th {*/
+/*    background: linear-gradient(135deg, #0077cc, #005fa3);*/
+/*    color: white;*/
+/*    font-weight: 600;*/
+/*}*/
+
+/*td {*/
+/*    border-top: 1px solid #eee;*/
+/*}*/
+
+/*tr {*/
+/*    transition: background 0.15s ease;*/
+/*}*/
+
+/*tr:hover {*/
+/*    background-color: #f1f7ff;*/
+/*}*/
+
+/*tr:nth-child(even) {*/
+/*    background-color: #fafafa;*/
+/*}*/
+
