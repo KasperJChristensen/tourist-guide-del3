@@ -10,6 +10,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
@@ -58,7 +59,7 @@ class TouristRepositoryTest {
 
     @Test
     void saveAttraction() {
-       int id = repo.saveAttraction(new TouristAttraction(4, "Rundetårn", "Et højt tårn i København", "København V", List.of("Culture", "History", "Tourism")), 1);
+        int id = repo.saveAttraction(new TouristAttraction(4, "Rundetårn", "Et højt tårn i København", "København V", List.of("Culture", "History", "Tourism")), 1);
 
         TouristAttraction rundetårn = repo.findAttractionById(id);
 
@@ -72,16 +73,26 @@ class TouristRepositoryTest {
 
     @Test
     void saveAttraction_tags() {
+        repo.saveAttraction_tags(1, List.of("History"));
 
+        assertThat(repo.findAttractionById(1).getTags()).isEqualTo(List.of("Culture", "History"));
 
     }
 
     @Test
     void updateAttraction() {
+        TouristAttraction rundetårn = new TouristAttraction(1, "Rundetårn", "Et højt tårn i København", "København V", List.of("Culture", "History", "Tourism"));
+        repo.updateAttraction(rundetårn,1);
+
+        assertThat(rundetårn.getName()).isEqualTo(repo.findAttractionById(1).getName());
+        assertThat(rundetårn.getDescription()).isEqualTo(repo.findAttractionById(1).getDescription());
+        assertThat(rundetårn.getLocation()).isEqualTo(repo.findAttractionById(1).getLocation());
+
     }
 
     @Test
     void deleteTagsForAttraction() {
+
     }
 
     @Test
@@ -109,4 +120,4 @@ class TouristRepositoryTest {
         assertThat(all.get(0)).isEqualTo("Culture");
         assertThat(all.get(1)).isEqualTo("History");
     }
-    }
+}
