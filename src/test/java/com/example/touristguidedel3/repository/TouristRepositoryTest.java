@@ -33,22 +33,32 @@ class TouristRepositoryTest {
     }
 
 
-
-
     @Test
     void findAttractionById() {
+        TouristAttraction attraction = repo.findAttractionById(1);
+
+        assertThat(attraction).isNotNull();
+        assertThat(attraction.getName()).isEqualTo("Tivoli Gardens");
+        assertThat(attraction.getDescription()).isEqualTo("An amusement park in the center of Copenhagen");
+        assertThat(attraction.getLocation()).isEqualTo("København V");
 
     }
 
     @Test
     void findLocationId() {
-        repo.findLocationId("københavn V");
+        List<String> allLocations = repo.getCities();
+
+        assertThat(allLocations).isNotNull();
+        assertThat(allLocations.size()).isEqualTo(3);
+        assertThat(allLocations.get(0)).isEqualTo("København V");
+        assertThat(allLocations.get(1)).isEqualTo("Køge");
+        assertThat(allLocations.get(2)).isEqualTo("Roskilde");
 
     }
 
     @Test
     void saveAttraction() {
-       int id = repo.saveAttraction(new TouristAttraction(3, "Rundetårn", "Et højt tårn i København", "København V", List.of("Culture", "History", "Tourism")), 1);
+       int id = repo.saveAttraction(new TouristAttraction(4, "Rundetårn", "Et højt tårn i København", "København V", List.of("Culture", "History", "Tourism")), 1);
 
         TouristAttraction rundetårn = repo.findAttractionById(id);
 
@@ -83,10 +93,11 @@ class TouristRepositoryTest {
         List<String> all = repo.getCities();
 
         assertThat(all).isNotNull();
-        assertThat(all.size()).isEqualTo(2);
+        assertThat(all.size()).isEqualTo(3);
 
         assertThat(all.get(0)).isEqualTo("København V");
-        assertThat(all.get(1)).isEqualTo("Roskilde");
+        assertThat(all.get(1)).isEqualTo("Køge");
+        assertThat(all.get(2)).isEqualTo("Roskilde");
     }
 
     @Test

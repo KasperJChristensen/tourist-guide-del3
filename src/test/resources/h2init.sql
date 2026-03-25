@@ -33,12 +33,14 @@ create table attraction_tag (
                                 foreign key (tag_id) references tags (id) on delete restrict
 );
 
-INSERT INTO location (id, city_name) VALUES (1, 'København V');
-INSERT INTO location (id, city_name) VALUES (2, 'Roskilde');
+INSERT INTO location (city_name) VALUES ('København V');
+INSERT INTO location (city_name) VALUES ('Køge');
+INSERT INTO location (city_name) VALUES ('Roskilde');
+
 
 INSERT INTO attraction (attraction_name, description, location_id) VALUES ('Tivoli Gardens', 'An amusement park in the center of Copenhagen', 1);
 INSERT INTO attraction (attraction_name, description, location_id) VALUES ('The Viking Ship Museum',
-                                                                               'With the sound of the waves and smell of wet wood, the Viking Ship Museum is located right by Roskilde Fjord', 2);
+                                                                               'With the sound of the waves and smell of wet wood, the Viking Ship Museum is located right by Roskilde Fjord', 3);
 
 INSERT INTO tags (id, tag) VALUES (1, 'Culture');
 INSERT INTO tags (id, tag) VALUES (2, 'History');
