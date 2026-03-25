@@ -46,6 +46,9 @@ public class TouristService {
     @Transactional
     public void saveAttraction(TouristAttraction attraction) {
         validateAttraction(attraction);
+        validateLocation(attraction.getLocation());
+        validateTags(attraction.getTags());
+
         try {
             int locationId = repository.findLocationId(attraction.getLocation());
             int attractionId = repository.saveAttraction(attraction, locationId);
@@ -62,6 +65,9 @@ public class TouristService {
     @Transactional
     public void updateAttraction(TouristAttraction attraction) {
         validateAttraction(attraction);
+        validateLocation(attraction.getLocation());
+        validateTags(attraction.getTags());
+
         int locationId = repository.findLocationId(attraction.getLocation());
         try {
             repository.updateAttraction(attraction, locationId);
@@ -110,6 +116,12 @@ public class TouristService {
     private void validateLocation(String location) {
         if (location == null || location.isBlank()) {
             throw new InvalidAttractionException("Location is required.");
+        }
+    }
+
+    private void validateTags(List<String> tags) {
+        if (tags == null || tags.isEmpty()) {
+            throw new InvalidAttractionException(("Tags is required."));
         }
     }
 }
