@@ -1,3 +1,4 @@
+drop table if exists attraction_tag;
 drop table if exists attraction;
 drop table if exists location;
 drop table if exists tags;
