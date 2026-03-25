@@ -35,7 +35,7 @@ public class TouristService {
         try {
             attraction = repository.findAttractionById(id);
         } catch (DataAccessException exception) {
-            throw new DatabaseOperationException("Failed to retrieve attration.", exception);
+            throw new AttractionNotFound(id);
         }
         if (attraction == null) {
             throw new AttractionNotFound(id);
