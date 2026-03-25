@@ -42,8 +42,8 @@ INSERT INTO attraction (attraction_name, description, location_id) VALUES ('Tivo
 INSERT INTO attraction (attraction_name, description, location_id) VALUES ('The Viking Ship Museum',
                                                                                'With the sound of the waves and smell of wet wood, the Viking Ship Museum is located right by Roskilde Fjord', 3);
 
-INSERT INTO tags (id, tag) VALUES (1, 'Culture');
-INSERT INTO tags (id, tag) VALUES (2, 'History');
+INSERT INTO tags (tag) VALUES ('Culture');
+INSERT INTO tags (tag) VALUES ('History');
 
 INSERT INTO attraction_tag (attraction_id, tag_id) VALUES (1,1);
 INSERT INTO attraction_tag (attraction_id, tag_id) VALUES (2,2);
