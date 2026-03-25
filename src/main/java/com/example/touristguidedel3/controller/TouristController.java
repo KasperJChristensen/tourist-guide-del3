@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+//https://gr2-touristguide-3-cabsg0bzg8g0ecde.norwayeast-01.azurewebsites.net/attractions
+// Link til hjemmesiden
 @Controller
 @RequestMapping("attractions")
 public class TouristController {
