@@ -12,32 +12,16 @@
     <h1 th:text="'Visit ' + ${attraction.name}"></h1>
 </div>
 
-<div class="card-container">
+<section class="info-box">
+    <label>Description:</label>
+    <div class="read-only-box" th:text="${attraction.description}"></div>
+</section>
 
-    <div class="card">
-        <div class="card-inner">
+<section class="info-box">
+    <label>City:</label>
+    <div class="read-only-box" th:text="${attraction.location}"></div>
+</section>
 
-            <!-- FRONT -->
-            <div class="card-front">
-                <h2 th:text="${attraction.name}"></h2>
-                <p>Hover to see details</p>
-            </div>
-
-            <!-- BACK -->
-            <div class="card-back">
-                <h3>Description</h3>
-                <p th:text="${attraction.description}"></p>
-
-                <h3>City</h3>
-                <p th:text="${attraction.location}"></p>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-
-<br>
 <a th:href="@{/attractions}">Back to List</a>
 
 </body>
