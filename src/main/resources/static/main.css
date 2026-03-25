@@ -139,6 +139,13 @@ tr:nth-child(even) {
 .name-column {
     font-weight: bold;
 }
+.error-box {
+    border: 1px solid #b00020;
+    background: #ffe6ea;
+    color: #7a0015;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+}
 
 
 /* --------------------------------------------------

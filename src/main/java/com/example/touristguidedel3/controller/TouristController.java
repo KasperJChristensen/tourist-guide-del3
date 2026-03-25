@@ -1,5 +1,7 @@
 package com.example.touristguidedel3.controller;
 
+import com.example.touristguidedel3.exception.DuplicateAttractionException;
+import com.example.touristguidedel3.exception.InvalidAttractionException;
 import com.example.touristguidedel3.model.TouristAttraction;
 import com.example.touristguidedel3.service.TouristService;
 import org.springframework.stereotype.Controller;
@@ -48,9 +50,19 @@ public class TouristController {
     }
 
     @PostMapping("/save")
-    public String saveAttraction(@ModelAttribute TouristAttraction attraction) {
-        service.saveAttraction(attraction);
-        return "redirect:/attractions";
+    public String saveAttraction(@ModelAttribute TouristAttraction attraction, Model model) {
+        try {
+            service.saveAttraction(attraction);
+            return "redirect:/attractions";
+        } catch (InvalidAttractionException | DuplicateAttractionException exception) {
+            model.addAttribute("cities", service.getCities());
+            model.addAttribute("tags", service.getTags());
+            model.addAttribute("attraction", attraction);
+            model.addAttribute("errorMessage", exception.getMessage());
+
+
+            return "addnewattraction";
+        }
     }
 
     @GetMapping("/{id}/edit")
@@ -62,11 +74,19 @@ public class TouristController {
     }
 
     @PostMapping("/update")
-    public String updateAttraction(@ModelAttribute TouristAttraction attraction) {
-        service.updateAttraction(attraction);
-        return "redirect:/attractions";
-    }
+    public String updateAttraction(@ModelAttribute TouristAttraction attraction, Model model) {
+        try {
+            service.updateAttraction(attraction);
+            return "redirect:/attractions";
+        } catch (InvalidAttractionException | DuplicateAttractionException exception) {
+            model.addAttribute("cities", service.getCities());
+            model.addAttribute("tags", service.getTags());
+            model.addAttribute("attraction", attraction);
+            model.addAttribute("errorMessage", exception.getMessage());
 
+            return "edit";
+        }
+    }
     @PostMapping("/delete/{id}")
     public String deleteAttraction(@PathVariable int id) {
         service.deleteAttraction(id);

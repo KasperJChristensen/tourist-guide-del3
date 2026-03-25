@@ -9,14 +9,17 @@
 <body>
 
 <h1>Add New Tourist Attraction</h1>
+<div class="error-box" th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+</div>
 
 <form th:action="@{/attractions/save}" th:object="${attraction}" method="post">
 
     <label for="name">Name:</label>
-    <input type="text" th:field="*{name}" id="name" required>
+    <input type="text" th:field="*{name}" id="name">
 
     <label for="description">Description:</label>
-    <textarea th:field="*{description}" id="description" rows="10" required></textarea>
+    <textarea th:field="*{description}" id="description" rows="10"></textarea>
 
     <label>City:</label>
     <select th:field="*{location}">

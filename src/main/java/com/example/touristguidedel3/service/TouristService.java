@@ -2,10 +2,12 @@ package com.example.touristguidedel3.service;
 
 import com.example.touristguidedel3.exception.AttractionNotFound;
 import com.example.touristguidedel3.exception.DatabaseOperationException;
+import com.example.touristguidedel3.exception.DuplicateAttractionException;
 import com.example.touristguidedel3.exception.InvalidAttractionException;
 import com.example.touristguidedel3.model.TouristAttraction;
 import com.example.touristguidedel3.repository.TouristRepository;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,18 +45,35 @@ public class TouristService {
 
     @Transactional
     public void saveAttraction(TouristAttraction attraction) {
+        validateAttraction(attraction);
+        try {
+            int locationId = repository.findLocationId(attraction.getLocation());
+            int attractionId = repository.saveAttraction(attraction, locationId);
+            repository.saveAttraction_tags(attractionId, attraction.getTags());
 
-        int locationId = repository.findLocationId(attraction.getLocation());
-        int attractionId = repository.saveAttraction(attraction, locationId);
-        repository.saveAttraction_tags(attractionId, attraction.getTags());
+        } catch (DataIntegrityViolationException exception) {
+            throw new DuplicateAttractionException("Attraction already exists.");
+
+        } catch (DataAccessException exception) {
+            throw new DatabaseOperationException("Failed to create attraction.", exception);
+        }
     }
 
     @Transactional
     public void updateAttraction(TouristAttraction attraction) {
+        validateAttraction(attraction);
         int locationId = repository.findLocationId(attraction.getLocation());
-        repository.updateAttraction(attraction, locationId);
-        repository.deleteTagsForAttraction(attraction.getId());
-        repository.saveAttraction_tags(attraction.getId(),attraction.getTags());
+        try {
+            repository.updateAttraction(attraction, locationId);
+            repository.deleteTagsForAttraction(attraction.getId());
+            repository.saveAttraction_tags(attraction.getId(), attraction.getTags());
+
+        } catch (DataIntegrityViolationException exception) {
+            throw new DuplicateAttractionException("Attraction already exists.");
+
+        } catch (DataAccessException exception) {
+            throw new DatabaseOperationException("Failed to create attraction.", exception);
+        }
     }
 
     @Transactional
