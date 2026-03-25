@@ -1,5 +1,6 @@
 package com.example.touristguidedel3.controller;
 
+import com.example.touristguidedel3.exception.AttractionNotFound;
 import com.example.touristguidedel3.model.TouristAttraction;
 import com.example.touristguidedel3.service.TouristService;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,15 @@ class TouristControllerTest {
 
         verify(service).findAttractionById(1);
 
+    }
+
+    @Test
+    void findAttractionById_notFound() throws Exception {
+        when(service.findAttractionById(999)).thenThrow(new AttractionNotFound(999));
+
+        mockMvc.perform(get("/attractions/999"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("error/404"));
     }
 
     @Test

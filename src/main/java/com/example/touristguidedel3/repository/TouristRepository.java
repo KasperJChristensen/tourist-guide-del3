@@ -37,7 +37,7 @@ public class TouristRepository {
 
     public List<TouristAttraction> getAttractions() {
         String sql = """
-                SELECT attraction.id, attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags 
+                SELECT attraction.id, attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags
                 FROM attraction
                 JOIN location
                     ON attraction.location_id = location.id 
@@ -53,7 +53,7 @@ public class TouristRepository {
     public TouristAttraction findAttractionById(int id) {
         String sql = """
                 SELECT attraction.id, attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags
-                FROM attraction 
+                FROM attraction
                 JOIN location 
                     ON attraction.location_id = location.id 
                 left JOIN attraction_tag 

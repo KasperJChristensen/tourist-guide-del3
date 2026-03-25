@@ -23,7 +23,7 @@ create table attraction (
 
 create table tags (
                       id int auto_increment primary key,
-                      tag varchar(200) unique
+                      tag varchar(200) unique not null
 );
 
 create table attraction_tag (
@@ -33,5 +33,3 @@ create table attraction_tag (
                                 foreign key (attraction_id) references attraction (id) on delete cascade,
                                 foreign key (tag_id) references tags (id) on delete restrict
 );
-
-SELECT * from attraction_tag;

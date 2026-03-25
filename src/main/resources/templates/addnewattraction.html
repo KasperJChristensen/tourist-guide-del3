@@ -27,10 +27,13 @@
     </select>
 
     <label>Tags:</label>
+    <div class="tags-grid">
         <label th:each="tag : ${tags}">
             <input type="checkbox" th:field="*{tags}" th:value="${tag}">
             <span th:text="${tag}"></span>
         </label>
+    </div>
+
 
     <button type="submit">Add Attraction</button>
 </form>

@@ -139,6 +139,13 @@ tr:nth-child(even) {
 .name-column {
     font-weight: bold;
 }
+
+.tags-grid {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 10px;
+}
+
 .error-box {
     border: 1px solid #b00020;
     background: #ffe6ea;

@@ -39,13 +39,3 @@ INSERT INTO attraction_tag (attraction_id, tag_id) VALUES
 ;
 
 
-
-SELECT attraction.attraction_name, tags.tag
-FROM attraction_tag
-         JOIN attraction
-              ON attraction_tag.attraction_id = attraction.id
-         JOIN tags
-              ON attraction_tag.tag_id = tags.id
-WHERE attraction.id = 1;
-
-
