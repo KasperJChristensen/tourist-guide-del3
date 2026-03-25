@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${status} + ' - ' + ${error}">404 - Not Found</title>
+  <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<div class="container">
+  <h1 th:text="${status} + ' - ' + ${error}">404 - Not Found</h1>
+
+  <div class="error-box">
+    <p><strong>Error:</strong> <span th:text="${error}">Not Found</span></p>
+    <p><strong>Message:</strong> <span th:text="${message}">The requested resource could not be found.</span></p>
+  </div>
+
+  <p>The page or resource you requested does not exist.</p>
+
+  <div class="actions">
+    <a th:href="@{/attractions}" class="button">Back to attraction list</a>
+  </div>
+</div>
+</body>
+</html>
