@@ -40,11 +40,11 @@ public class TouristRepository {
                 SELECT attraction.id, attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags
                 FROM attraction
                 JOIN location
-                    ON attraction.location_id = location.id 
-                left JOIN attraction_tag 
-                    ON attraction.id = attraction_tag.attraction_id 
-                left JOIN tags 
-                    ON attraction_tag.tag_id = tags.id 
+                    ON attraction.location_id = location.id
+                left JOIN attraction_tag
+                    ON attraction.id = attraction_tag.attraction_id
+                left JOIN tags
+                    ON attraction_tag.tag_id = tags.id
                 GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;
                 """;
         return jdbcTemplate.query(sql, rowMapper);
@@ -54,13 +54,13 @@ public class TouristRepository {
         String sql = """
                 SELECT attraction.id, attraction.attraction_name, attraction.description, location.city_name, GROUP_CONCAT(tags.tag ORDER BY tags.tag SEPARATOR ',') AS tags
                 FROM attraction
-                JOIN location 
-                    ON attraction.location_id = location.id 
-                left JOIN attraction_tag 
-                    ON attraction.id = attraction_tag.attraction_id 
-                left JOIN tags 
-                    ON attraction_tag.tag_id = tags.id 
-                WHERE attraction.id = ? 
+                JOIN location
+                    ON attraction.location_id = location.id
+                left JOIN attraction_tag
+                    ON attraction.id = attraction_tag.attraction_id
+                left JOIN tags
+                    ON attraction_tag.tag_id = tags.id
+                WHERE attraction.id = ?
                 GROUP BY attraction.id, attraction.attraction_name, attraction.description, location.city_name;
                 """;
         return jdbcTemplate.queryForObject(sql, rowMapper, id);
